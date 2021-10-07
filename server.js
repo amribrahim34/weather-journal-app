@@ -14,6 +14,7 @@ const app = express();
 //Here we are configuring express to use body-parser as middle-ware.
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
 
 // Cors for cross origin allowance
 
@@ -23,4 +24,14 @@ app.use(express.static("website"));
 // Setup Server
 app.listen(port, () => {
   console.log("server is running");
+});
+
+// get request that sends the project data
+app.get("/projectdata", (req, res) => {
+  res.send(projectData);
+});
+
+app.post("/projectdata", (req, res) => {
+  let recievedData = req.body;
+  projectData.push(recievedData);
 });
