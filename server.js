@@ -6,6 +6,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const port = 8000;
+const apiKey = f076f67756a740f2111ede1f6deacf95;
+const zip = document.getElementById('zip').value;
+const apiEndPoint = api.openweathermap.org/data/2.5/weather?zip=zip&appid=apiKey;
 
 // Start up an instance of app
 const app = express();
@@ -25,6 +28,10 @@ app.use(express.static("website"));
 app.listen(port, () => {
   console.log("server is running");
 });
+
+
+ let ss = fetch(apiEndPoint);
+console.log(ss);
 
 // get request that sends the project data
 app.get("/projectdata", (req, res) => {
