@@ -34,10 +34,9 @@ app.get("/projectdata", (req, res) => {
 });
 
 // post route to add data to projectData
-app.post("/projectdata/:temperature/:date/:response", (req, res) => {
-  let receivedData = req.params;
-  projectData.temperature = req.params.temperature;
-  projectData.date = req.params.date;
-  projectData.response = req.params.response;
+app.post("/projectdata", (req, res) => {
+  projectData.temperature = req.body.weather["description"];
+  // projectData.date = req.params.date;
+  // projectData.response = req.params.response;
   res.send(JSON.stringify(projectData));
 });

@@ -11,28 +11,48 @@ const options = {
 let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
 
+async function updateUi() {
+  let wetherData = await getWeatherData(apiEndPoint, options).then(
+    (wetherData) => {
+      setProjectData(`POST`, wetherData);
+    }
+  );
+  let projectData = await getAppData(`/projectdata`, { method: "GET" });
+}
+
 async function getWeatherData(apiEndPoint, options) {
   apiEndPoint += `&zip=${zip.value}`;
   let data = await fetch(apiEndPoint, options);
   try {
     let newData = await data.json();
-    console.log(newData);
     return newData;
   } catch (error) {
     console.log(error);
   }
 }
 
-async function setProjectData(httpMethod, temperature, date, response) {
-  let data = await fetch(
-    `http://127.0.0.1:8000/projectdata/${temperature}/${date}/${response}`,
-    {
-      method: httpMethod,
-    }
-  );
+async function getAppData(apiEndPoint, options) {
+  let data = await fetch(apiEndPoint, options);
   try {
-    let projectData = await data.json();
-    console.log(projectData);
+    let newData = await data.json();
+    return newData;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function setProjectData(httpMethod, apiData) {
+  let jsonData = JSON.stringify(apiData);
+  let data = await fetch(`http://127.0.0.1:8000/projectdata`, {
+    method: httpMethod,
+    body: jsonData,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  try {
+    let projectData = await data;
+    // console.log(projectData);
     return projectData;
   } catch (error) {
     console.log(error);
@@ -41,10 +61,7 @@ async function setProjectData(httpMethod, temperature, date, response) {
 
 const button = document.getElementById("generate");
 button.addEventListener("click", () => {
-  console.log(zip.value);
-  console.log("zip");
-  getWeatherData(apiEndPoint, options);
+  updateUi();
 });
 
-// getWeatherData(apiEndPoint, options);
-setProjectData("POST", 25, d, 1);
+// setProjectData("POST",);
