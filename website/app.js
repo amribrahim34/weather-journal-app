@@ -1,7 +1,7 @@
 /* Global Variables */
-let zip = document.getElementById("zip").value;
+let zip = document.getElementById("zip");
 const apiKey = `f076f67756a740f2111ede1f6deacf95`;
-const apiEndPoint = `http://api.openweathermap.org/data/2.5/weather?zip=${zip}&appid=${apiKey}`;
+const apiEndPoint = `http://api.openweathermap.org/data/2.5/weather?appid=${apiKey}`;
 const options = {
   method: "GET",
 };
@@ -12,6 +12,7 @@ let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
 
 async function getWeatherData(apiEndPoint, options) {
+  apiEndPoint += `&zip=${zip.value}`;
   let data = await fetch(apiEndPoint, options);
   try {
     let newData = await data.json();
@@ -40,7 +41,7 @@ async function setProjectData(httpMethod, temperature, date, response) {
 
 const button = document.getElementById("generate");
 button.addEventListener("click", () => {
-  console.log(zip);
+  console.log(zip.value);
   console.log("zip");
   getWeatherData(apiEndPoint, options);
 });
