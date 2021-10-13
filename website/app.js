@@ -12,12 +12,17 @@ let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
 
 async function updateUi() {
+  let allData = {};
   let wetherData = await getWeatherData(apiEndPoint, options).then(
     (wetherData) => {
       setProjectData(`POST`, wetherData);
     }
-  );
-  let projectData = await getAppData(`/projectdata`, { method: "GET" });
+  ).then (async (wetherData)=>{
+    let projectData = await getAppData(`/projectdata`, { method: "GET" }).then((projectData)=>{
+      
+    });
+  });
+  
 }
 
 async function getWeatherData(apiEndPoint, options) {
