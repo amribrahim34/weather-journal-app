@@ -10,49 +10,51 @@ const options = {
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
-let content = document.getElementById('feelings');
+let feeling = document.getElementById("feelings");
 
 async function updateUi() {
   let allData = {};
-  let wetherData = await getWeatherData(apiEndPoint, options).then(
-    (wetherData) => {
+  let wetherData = await getWeatherData(apiEndPoint, options)
+    .then((wetherData) => {
       setProjectData(`POST`, wetherData);
-    }
-  ).then (async (wetherData)=>{
-    let projectData = await getAppData(`/projectdata`, { method: "GET" }).then((projectData)=>{
-      updateFrontEnd(projectData);
+    })
+    .then(async (wetherData) => {
+      let projectData = await getAppData(`/projectdata`, {
+        method: "GET",
+      }).then((projectData) => {
+        updateFrontEnd(projectData);
+        console.log(projectData);
+        console.log(feeling.value);
+      });
     });
-  });
-  
 }
 
-function updateFrontEnd (projectData){
+function updateFrontEnd(projectData) {
   projectData = JSON.parse(projectData);
   updateDate();
   updateTemp(projectData.main.temp);
-  updateContent();
+  updateContent(projectData.feeling);
 }
 
-function updateDate(){
-  let date = document.getElementById('date');
-  let p = document.createElement('p');
-  p.innerText = newDate ;
-  date.append(p);
+function updateDate() {
+  let date = document.getElementById("date");
+  let pa = document.createElement("p");
+  pa.innerText = newDate;
+  date.append(pa);
 }
 
-function updateTemp(temp){
-  let tempDiv = document.getElementById('temp');
-  let p = document.createElement('p');
-  p.innerText = temp ;
+function updateTemp(temp) {
+  let tempDiv = document.getElementById("temp");
+  let p = document.createElement("p");
+  p.innerText = temp;
   tempDiv.append(p);
 }
 
-function updateContent(){
-  let contentDiv = document.getElementById('content');
-  let p = document.createElement('p');
-  p.innerText = content.value ;
+function updateContent(feeling) {
+  let contentDiv = document.getElementById("content");
+  let p = document.createElement("p");
+  p.innerText = feeling;
   contentDiv.append(p);
-
 }
 
 async function getWeatherData(apiEndPoint, options) {
@@ -77,6 +79,7 @@ async function getAppData(apiEndPoint, options) {
 }
 
 async function setProjectData(httpMethod, apiData) {
+  apiData["feeling"] = feeling.value;
   let jsonData = JSON.stringify(apiData);
   let data = await fetch(`http://127.0.0.1:8000/projectdata`, {
     method: httpMethod,
