@@ -2,10 +2,10 @@
 let projectData = {};
 
 // Require Express to run server and routes
-import fetch from "node-fetch";
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
+const express =  require("express");
+const bodyParser =  require("body-parser");
+const cors =  require("cors");
+
 
 const port = 8000;
 
