@@ -10,6 +10,7 @@ const options = {
 // Create a new date instance dynamically with JS
 let d = new Date();
 let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
+let content = document.getElementById('feelings');
 
 async function updateUi() {
   let allData = {};
@@ -19,10 +20,39 @@ async function updateUi() {
     }
   ).then (async (wetherData)=>{
     let projectData = await getAppData(`/projectdata`, { method: "GET" }).then((projectData)=>{
-      
+      updateFrontEnd(projectData);
     });
   });
   
+}
+
+function updateFrontEnd (projectData){
+  projectData = JSON.parse(projectData);
+  updateDate();
+  updateTemp(projectData.main.temp);
+  updateContent();
+}
+
+function updateDate(){
+  let date = document.getElementById('date');
+  let p = document.createElement('p');
+  p.innerText = newDate ;
+  date.append(p);
+}
+
+function updateTemp(temp){
+  let tempDiv = document.getElementById('temp');
+  let p = document.createElement('p');
+  p.innerText = temp ;
+  tempDiv.append(p);
+}
+
+function updateContent(){
+  let contentDiv = document.getElementById('content');
+  let p = document.createElement('p');
+  p.innerText = content.value ;
+  contentDiv.append(p);
+
 }
 
 async function getWeatherData(apiEndPoint, options) {
