@@ -9,7 +9,7 @@ const options = {
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth() + "." + d.getDate() + "." + d.getFullYear();
+let newDate = d.getMonth() + 1 + "/" + d.getDate() + "/" + d.getFullYear();
 let feeling = document.getElementById("feelings");
 
 async function updateUi() {
@@ -39,21 +39,21 @@ function updateFrontEnd(projectData) {
 function updateDate() {
   let date = document.getElementById("date");
   let pa = document.createElement("p");
-  pa.innerText = newDate;
+  pa.innerHTML = `Date :${newDate}`;
   date.append(pa);
 }
 
 function updateTemp(temp) {
   let tempDiv = document.getElementById("temp");
   let p = document.createElement("p");
-  p.innerText = temp;
+  p.innerHTML = `Temp :${temp}`;
   tempDiv.append(p);
 }
 
 function updateContent(feeling) {
   let contentDiv = document.getElementById("content");
   let p = document.createElement("p");
-  p.innerText = feeling;
+  p.innerHtml = `I Feel :${feeling}`;
   contentDiv.append(p);
 }
 
