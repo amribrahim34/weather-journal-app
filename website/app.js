@@ -1,7 +1,7 @@
 /* Global Variables */
 let zip = document.getElementById("zip");
 const apiKey = `f076f67756a740f2111ede1f6deacf95`;
-const apiEndPoint = `http://api.openweathermap.org/data/2.5/weather?appid=${apiKey}`;
+const apiEndPoint = `http://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&units=metric`;
 const options = {
   method: "GET",
 };
